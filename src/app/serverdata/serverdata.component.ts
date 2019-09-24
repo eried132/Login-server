@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginserverService} from '../loginserver.service';
 import { AuthenticateService} from '../authenticate.service';
+import {Router} from '@angular/router';
+import { Person } from '../person';
 
 @Component({
   selector: 'app-serverdata',
@@ -9,15 +11,21 @@ import { AuthenticateService} from '../authenticate.service';
 })
 export class ServerdataComponent implements OnInit {
 
-  private data: any;
+  person$: Person;
 
-  constructor( private lss: LoginserverService) { }
-
-  showData() {
-    this.lss.getData().subscribe(data => this.data);
-    return this.data;
-  }
+  constructor(private lss: LoginserverService,
+              private authService: AuthenticateService,
+              private router: Router) { }
 
   ngOnInit() {}
 
+  showData() {
+    this.lss.getData().subscribe(data => this.person$ = data);
+    return JSON.stringify(this.person$);
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigateByUrl('/login');
+  }
 }
