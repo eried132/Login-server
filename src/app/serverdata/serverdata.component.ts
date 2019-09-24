@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginserverService} from '../loginserver.service';
+import { AuthenticateService} from '../authenticate.service';
 
 @Component({
   selector: 'app-serverdata',
